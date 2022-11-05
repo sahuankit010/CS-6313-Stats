@@ -66,7 +66,7 @@ local = voltages$voltage[voltages$location==1]
 print(remote)
 print(local)
 
-boxplot(remote, local)
+boxplot(remote, local, main="Boxplot for remote and local", names = c("Remote", "Local"))
 
 qqnorm(remote, main="QQ Norm for remote voltage location")
 qqline(remote)
@@ -101,19 +101,25 @@ print(vapor)
 theoretical = vapor$theoretical
 experimental = vapor$experimental
 
+qqnorm(theoretical, main ="Theoritical QQ plot")
+qqline(theoretical)
+
+
+qqnorm(experimental, main ="Experimental QQ plot")
+qqline(experimental, main = "Experimental QQ plot line")
+
+boxplot(theoretical, experimental, names = c("Theoretical", "Remote"), main="Boxplot: Theoretical and Experimental")
+
 diff = theoretical-experimental
 
 print(diff)
+mean(diff)
+sd(diff)
 
-hist(diff)
 
 ci = mean(diff) + c(1,-1)*qt(0.975, 15)* (sd(diff)/sqrt(16))
 print(ci)
 
-
-
-
-
-
+t.test(theoretical,experimental, alternative = "two.sided", paired = "True", conf.level = 0.95,var.equal = FALSE)
 
 
